@@ -19,14 +19,11 @@ contract HelperConfig is Script {
         uint256 deployerKey;
     }
 
-    uint256 public constant DEFAULT_ANVIL_KEY =
-        0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80;
+    uint256 public constant DEFAULT_ANVIL_KEY = 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80;
 
     constructor() {
         if (block.chainid == 11155111) {
             activeNetworkConfig = getSepoliaEthConfig();
-            // } else if (block.chainid == 1) {
-            //     activeNetworkConfig = getMainnetEthConfig();
         } else {
             activeNetworkConfig = getOrCreateAnvilEthConfig();
         }
@@ -62,16 +59,15 @@ contract HelperConfig is Script {
         LinkToken link = new LinkToken();
         vm.stopBroadcast();
 
-        return
-            NetworkConfig({
-                entranceFee: 0.01 ether,
-                interval: 30,
-                vrfCoordinator: address(vrfCoordinatorMock),
-                gasLane: 0x474e34a077df58807dbe9c96d3c009b23b3c6d0cce433e59bbf5b34f823bc56c,
-                subscriptionId: 0, // Our script will add this!
-                callbackGasLimit: 500000, // 500,000 gas!
-                link: address(link),
-                deployerKey: DEFAULT_ANVIL_KEY
-            });
+        return NetworkConfig({
+            entranceFee: 0.01 ether,
+            interval: 30,
+            vrfCoordinator: address(vrfCoordinatorMock),
+            gasLane: 0x474e34a077df58807dbe9c96d3c009b23b3c6d0cce433e59bbf5b34f823bc56c,
+            subscriptionId: 0, // Our script will add this!
+            callbackGasLimit: 500000, // 500,000 gas!
+            link: address(link),
+            deployerKey: DEFAULT_ANVIL_KEY
+        });
     }
 }

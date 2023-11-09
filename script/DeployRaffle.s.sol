@@ -23,19 +23,11 @@ contract DeployRaffle is Script {
         if (subscriptionId == 0) {
             // we are going to need to create a subscription!
             CreateSubscription createSubscription = new CreateSubscription();
-            subscriptionId = createSubscription.createSubscription(
-                vrfCoordinator,
-                deployerKey
-            );
+            subscriptionId = createSubscription.createSubscription(vrfCoordinator, deployerKey);
 
             // Fund it
             FundSubscription fundSubscription = new FundSubscription();
-            fundSubscription.fundSubscription(
-                vrfCoordinator,
-                subscriptionId,
-                link,
-                deployerKey
-            );
+            fundSubscription.fundSubscription(vrfCoordinator, subscriptionId, link, deployerKey);
         }
 
         vm.startBroadcast(deployerKey);
@@ -51,12 +43,7 @@ contract DeployRaffle is Script {
         vm.stopBroadcast();
 
         AddConsumer addConsumer = new AddConsumer();
-        addConsumer.addConsumer(
-            address(raffle),
-            vrfCoordinator,
-            subscriptionId,
-            deployerKey
-        );
+        addConsumer.addConsumer(address(raffle), vrfCoordinator, subscriptionId, deployerKey);
 
         return (raffle, helperConfig);
     }
